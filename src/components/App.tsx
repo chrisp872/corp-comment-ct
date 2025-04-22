@@ -1,17 +1,24 @@
 import Container from "./layout/Container";
 import Footer from "./layout/Footer";
 import HashtagList from "./hashtag/HashtagList";
-import FeebackItemsContextProvider from "../contexts/FeebackItemsContextProvider";
+import { useEffect } from "react";
+import { useFeedbackItemsStore } from "../stores/feedbackItemsStore";
 
 function App() {
+  const fetchFeedbackItems = useFeedbackItemsStore(
+    (state) => state.fetchFeedbackItems
+  );
+
+  useEffect(() => {
+    fetchFeedbackItems();
+  }, [fetchFeedbackItems]);
+  
   return (
     <>
       <div className="app">
         <Footer />
-        <FeebackItemsContextProvider>
           <Container />
           <HashtagList />
-        </FeebackItemsContextProvider>
       </div>
     </>
   );
